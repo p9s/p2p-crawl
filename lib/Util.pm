@@ -7,7 +7,7 @@ use Mojo::UserAgent;
 use String::CamelCase qw/camelize/;
 use File::Basename qw/fileparse/;
 
-use Carp qw/cluck/;
+use Carp qw/carp cluck/;
 
 use Data::Dumper;
 
@@ -20,6 +20,7 @@ require Exporter;
     now
     dt2s
     camelize
+    carp
     cluck
     fileparse
     chompf

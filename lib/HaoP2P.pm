@@ -44,5 +44,10 @@ sub _build_dbh {
     return $self->schema->storage->dbh;
 }
 
+sub rset {
+    my $self = shift;
+    my $name = shift;
+    return $self->schema->resultset($name);
+}
 
 1;

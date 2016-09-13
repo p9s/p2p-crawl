@@ -1,5 +1,5 @@
 package HaoP2P::Bots::Lu;
-
+use utf8;
 # Author: Mc Cheung
 # Email:  mc.cheung@aol.com
 # Date:   13 Sep 2016
@@ -11,10 +11,10 @@ use List::MoreUtils qw/uniq/;
 use Data::Dumper;
 use namespace::clean;
 
-has site     => ( is => 'ro', isa => Str, default => 'https://list.lu.com' );
-has debug    => ( is => 'ro', isa => Int, default => 0 );
-has max_page => ( is => 'rw', isa => Int, default => 99 );
-
+has site       => ( is => 'ro', isa => Str, default => 'https://list.lu.com' );
+has debug      => ( is => 'ro', isa => Int, default => 0 );
+has max_page   => ( is => 'rw', isa => Int, default => 99 );
+has site_index => ( is => 'ro', isa => Str, default => 'lu_com' );
 extends 'HaoP2P::Bots';
 
 sub search {
@@ -64,9 +64,9 @@ sub search {
             );
 
             fix_params($info);
-
-            push @items, $info unless $self->debug;
-            full_logs( Dumper $info ) if $self->debug;
+            push @{ $info->{tags} }, '活期';
+            push @items, $info;    # unless $self->debug;
+            $self->store($info);
         }
     );
 
@@ -169,8 +169,9 @@ sub search {
                 );
 
                 fix_params($info);
-
+                push @{ $info->{tags} }, '定期';
                 push @items, $info;
+                $self->store($info);
 
             }
         );
@@ -184,11 +185,11 @@ sub search {
                 $self->max_page( $self->max_page - 1 );
             }
             else {
-                $url = undef;
+                undef $url;
             }
         }
         else {
-            $url = undef;
+            undef $url;
         }
 
     }
@@ -199,7 +200,7 @@ sub fix_params {
     my $info = shift;
     $info->{uniq_id} = $1 if $info->{url} =~ /product\/(\d+)\//;
     $info->{uniq_id} = $1 if $info->{url} =~ /productId=(\d+)/;
-    @{ $info->{tags}} = uniq @{ $info->{tags} };
+    @{ $info->{tags} } = uniq @{ $info->{tags} };
 }
 
 1;
