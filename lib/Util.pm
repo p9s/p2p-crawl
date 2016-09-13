@@ -4,9 +4,11 @@ use Time::HiRes qw/usleep/;
 use DateTime;
 use WWW::UserAgent::Random;
 use Mojo::UserAgent;
+use String::CamelCase qw/camelize/;
+use File::Basename qw/fileparse/;
 
-use File::Path qw/make_path/;
-use DB;
+use Carp qw/cluck/;
+
 use Data::Dumper;
 
 require Exporter;
@@ -17,11 +19,32 @@ require Exporter;
     get_ua
     now
     dt2s
+    camelize
+    cluck
+    fileparse
+    chompf
+    merge_space
 /;
 
 @EXPORT_OK = @EXPORT;
 
 our $DEBUG = 0;
+
+sub merge_space {
+    my $str = shift;
+    return '' unless $str;
+
+    $str =~ s/\s+/\s/g;
+    return $str;
+}
+
+sub chompf {
+    my $str = shift;
+    return '' unless $str;
+    $str =~ s/^\s+//g;
+    $str =~ s/\s+$//g;
+    return $str;
+}
 
 sub full_url {
     my $url     = shift;
@@ -36,6 +59,7 @@ sub full_logs {
 
     $now = dt2s( now() );
     say "[$now] $logs";
+    die if $leve && $level eq 'die';
 }
 
 
