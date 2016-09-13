@@ -6,8 +6,8 @@ package HaoP2P::Bots::Lu;
 
 use Moo;
 use Types::Standard qw/Str Int/;
-use URI;
 use Util;
+use List::MoreUtils qw/uniq/;
 use Data::Dumper;
 use namespace::clean;
 
@@ -199,6 +199,7 @@ sub fix_params {
     my $info = shift;
     $info->{uniq_id} = $1 if $info->{url} =~ /product\/(\d+)\//;
     $info->{uniq_id} = $1 if $info->{url} =~ /productId=(\d+)/;
+    @{ $info->{tags}} = uniq @{ $info->{tags} };
 }
 
 1;

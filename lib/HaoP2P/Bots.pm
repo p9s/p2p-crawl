@@ -3,6 +3,8 @@ use utf8;
 use Moo;
 use Types::Standard qw/InstanceOf/;
 use Util;
+use HaoP2P;
+
 use URI;
 use feature qw/say/;
 
