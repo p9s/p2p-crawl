@@ -15,8 +15,14 @@ __PACKAGE__->add_columns(
     title       => { data_type => 'varchar', is_nullable => 1, size              => 255 },
     uniq_id     => { data_type => 'varchar', is_nullable => 0, size              => 255 },
     url         => { data_type => 'varchar', is_nullable => 0, size              => 255 },
-    tags       => { data_type => 'varchar', is_nullable => 0,    size             => 255, serializer_class => 'JSON' },
-    progress   => { data_type => 'varchar', is_nullable => 1,    size             => 32 },
+    tags     => { data_type => 'varchar', is_nullable => 0, size => 255, serializer_class => 'JSON' },
+    progress => { data_type => 'varchar', is_nullable => 1, size => 32 },
+
+    interest   => { data_type => 'varchar', is_nullable => 1, size => 32 },
+    days       => { data_type => 'integer', is_nullable => 1 },
+    pay_method => { data_type => 'varchar', is_nullable => 1, size => 255 },
+    min_amount => { data_type => 'integer', is_nullable => 1 },
+
     properties => { data_type => 'text',    is_nullable => 1,    serializer_class => 'JSON' },
     status     => { data_type => 'varchar', size        => '16', default_value    => 'on' },
 
@@ -28,13 +34,12 @@ __PACKAGE__->set_primary_key('id');
 __PACKAGE__->add_unique_constraint( 'p2p_site_id_uniq_id', [qw/p2p_site_id uniq_id/] );
 __PACKAGE__->belongs_to( 'site' => 'HaoP2P::Schema::Result::P2PSite', 'p2p_site_id' );
 
-
 sub update_product {
-    my $self = shift;
+    my $self    = shift;
     my $product = shift;
 
     $product->{updated_at} = now;
-    return $self->update( $product );
+    return $self->update($product);
 }
 
 1;

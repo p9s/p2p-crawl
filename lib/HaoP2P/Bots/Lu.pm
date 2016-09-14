@@ -1,8 +1,10 @@
 package HaoP2P::Bots::Lu;
 use utf8;
+# ###############################
 # Author: Mc Cheung
 # Email:  mc.cheung@aol.com
 # Date:   13 Sep 2016
+# ###############################
 
 use Moo;
 use Types::Standard qw/Str Int/;
@@ -65,6 +67,70 @@ sub search {
 
             fix_params($info);
             push @{ $info->{tags} }, '活期';
+            push @items, $info;    # unless $self->debug;
+            $self->store($info);
+        }
+    );
+
+    # P2P
+    $url = $self->abs_url('/list/p2p');
+    $self->ua->get($url)->res->dom->find('li.product-rows-item')->each(
+        sub {
+            my ($e) = @_;
+            my $info = {};
+
+            $e->find('a.product-title')->each(
+                sub {
+                    my ($e) = @_;
+                    $info->{title} .= $e->all_text;
+                    $info->{url}   .= $self->abs_url( $e->attr('href') );
+                }
+            );
+
+            # tags
+            $e->find('span[class^="ld-tag"]')->each(
+                sub {
+                    my ($e) = @_;
+                    push @{ $info->{tags} }, merge_space chompf $e->all_text;
+                }
+            );
+
+            $e->find('ul[class^="product-desc"] > li')->each(
+                sub {
+                    my ($e) = @_;
+                    my ( $label, $value );
+                    $e->find('span')->each(
+                        sub {
+                            my $e = shift;
+                            $label .= merge_space chompf $e->all_text;
+                        }
+                    );
+
+                    $e->find('p')->each(
+                        sub {
+                            my $e = shift;
+                            $value .= merge_space chompf $e->all_text;
+                        }
+                    );
+
+                    push @{ $info->{properties} }, { label => $label, value => $value } if $label && $value;
+                }
+            );
+
+            $e->find('li.product-options product-status')->each(
+                sub {
+                    my $e = shift;
+                    $e->find('a')->each(
+                        sub {
+                            $info->{status} = 'on';
+                        }
+                    );
+                }
+            );
+            $info->{status} = 'off' unless $info->{ status };
+
+            fix_params($info);
+            push @{ $info->{tags} }, 'P2P';
             push @items, $info;    # unless $self->debug;
             $self->store($info);
         }
@@ -201,6 +267,29 @@ sub fix_params {
     $info->{uniq_id} = $1 if $info->{url} =~ /product\/(\d+)\//;
     $info->{uniq_id} = $1 if $info->{url} =~ /productId=(\d+)/;
     @{ $info->{tags} } = uniq @{ $info->{tags} };
+
+    foreach my $property ( @{ $info->{properties} } ) {
+        my $label = $property->{label} // '';
+        my $value = $property->{value} // '';
+
+        if ( $label =~ /收益|利率/ ) {
+            $info->{interest} = $1 if $value =~ /([\d\.]+)/;
+        }
+        if ( $label =~ /期限/ ) {
+            $info->{days} = $1 if $value =~ /(\d+)/;
+            unless ( defined $info->{days} ) {
+                $info->{days} = 0 if $value =~ /灵活/;
+            }
+        }
+
+        if ( $label =~ /金额/ ) {
+            $info->{min_amount} = $1 if $value =~ /([\d,\.]+)/;
+            $info->{min_amount} =~ s/[,]//g;
+            $info->{min_amount} = int( $info->{min_amount} );
+        }
+
+        $info->{pay_method} = $value if $label =~ /收益方式/;
+    }
 }
 
 1;
