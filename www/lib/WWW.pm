@@ -29,7 +29,7 @@ sub startup {
         }
     );
 
-    push @{$self->renderer->paths}, 'views';
+    #push @{$self->renderer->paths}, 'views';
     $self->defaults( layout => 'wrapper' );
     $self->renderer->default_handler('tt');
 
@@ -37,7 +37,7 @@ sub startup {
     my $r = $self->routes;
 
     # Normal route to controller
-    $r->get('/')->to('example#welcome');
+    $r->get('/')->to('root#index');
 }
 
 1;
