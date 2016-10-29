@@ -9,10 +9,10 @@ use FindBin qw/$Bin/;
 use lib "$Bin/../../../lib";
 
 BEGIN {
-    use_ok 'HaoP2P::Bots::Lu';
+    use_ok 'HaoP2P::Bots::IqianJinCom';
 }
 
-my $bots = HaoP2P::Bots::Lu->new;
+my $bots = HaoP2P::Bots::IqianJinCom->new;
 
 my $items = $bots->search;
 

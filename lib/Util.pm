@@ -34,8 +34,10 @@ our $DEBUG = 0;
 sub merge_space {
     my $str = shift;
     return '' unless $str;
-
-    $str =~ s/\s+/\s/g;
+   
+    $str =~ s/\t+/ /g;
+    $str =~ s/\r\n//g;
+    $str =~ s/\s+/ /g;
     return $str;
 }
 

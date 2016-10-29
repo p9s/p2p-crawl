@@ -59,4 +59,13 @@ sub _update_or_create_product {
     }
 }
 
+sub dump_html {
+    my $self = shift;
+    my $tx = shift;
+
+    open my $fh, '>', '/tmp/html_debug_body.html' || die "$!\n";
+    print $fh $tx->res->body;
+    close $fh;
+}
+
 1;

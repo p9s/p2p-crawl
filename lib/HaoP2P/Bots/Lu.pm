@@ -238,7 +238,6 @@ sub search {
                 push @{ $info->{tags} }, '定期';
                 push @items, $info;
                 $self->store($info);
-
             }
         );
         my $page_count = $tx->res->dom->find('input[id="pageCount"]')->first;
@@ -257,7 +256,6 @@ sub search {
         else {
             undef $url;
         }
-
     }
     return \@items;
 }

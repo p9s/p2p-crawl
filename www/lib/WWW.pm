@@ -1,5 +1,7 @@
 package WWW;
 use Mojo::Base 'Mojolicious';
+use lib '../../lib';
+use HaoP2P;
 use Data::Dumper;
 
 # This method will run once at server start
@@ -38,6 +40,7 @@ sub startup {
 
     # Normal route to controller
     $r->get('/')->to('root#index');
+    $r->get('/product/:haop2p_product_id')->to('product#index');
 }
 
 1;

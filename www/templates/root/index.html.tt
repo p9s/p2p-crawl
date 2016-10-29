@@ -1,0 +1,54 @@
+<div class="row haop2p-top-ads">
+
+</div>
+<div class="row">
+  <div class="small-2 large-8 columns">
+    [% IF top_products %]
+    <ul class="hover haop2p-products no-bullet">
+      [% FOREACH product IN top_products %]
+      <li>
+        <div class="row columns">
+          <a href="/product/[% product.id %]"><h5>[% product.title %]</h5></a>
+          <a class="button" href="/product/[% product.id %]">查看详情</a>
+        </div>
+
+        [% FOREACH tag IN product.tags %]
+        <span class="alert label round">[% tag %]</span>
+        [% END %]
+        <p>
+          完成: <span>[% product.progress || 0 %]</span><span class="label">%</span>
+        </p>
+        <p>
+          利率: [% product.interest %]
+        </p>
+        <p>
+          锁定：[% product.days || 0 %] 天
+        </p>
+        <p>
+          提现: [% product.pay_method %]
+        </p>
+        <p>
+          最小投资: [% product.min_amount %]
+        </p>
+        <p>
+          [% FOREACH property IN product.properties %]
+          <span class="label"> [% property.label %]: [% property.value %]</span>
+          [% END %]
+        </p>
+        <p>
+          项目状态: <span class="label">[% IF product.status == 'off' %]不[% END %]可投资</span>
+        </p>
+        <p>
+          加入时间: [% product.created_at.strftime( '%Y-%m-%d %H:%M:%S' ) %]
+        </p>
+        <p>
+          更新时间: [% product.updated_at.strftime( '%Y-%m-%d %H:%M:%S' ) %]
+        </p>
+      </li>
+      [% END %]
+    </ul>
+    [% END %]
+  </div>
+  <div class="small-2 large-: columns">
+  </div>
+</div>
