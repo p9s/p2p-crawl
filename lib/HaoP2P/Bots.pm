@@ -47,9 +47,12 @@ sub store {
 }
 
 sub _update_or_create_product {
-    my $self    = shift;
-    my $item    = shift;
-    return unless $item->{uniq_id};
+    my $self = shift;
+    my $item = shift;
+    unless ( $item->{uniq_id} ) {
+        full_logs( "Item UNIQ_ID not found: " . to_json($item) );
+        return;
+    }
 
     my $product = $self->Site->find_product( $item->{uniq_id} );
     if ($product) {
@@ -62,7 +65,7 @@ sub _update_or_create_product {
 
 sub dump_html {
     my $self = shift;
-    my $tx = shift;
+    my $tx   = shift;
 
     open my $fh, '>', '/tmp/html_debug_body.html' || die "$!\n";
     print $fh $tx->res->body;

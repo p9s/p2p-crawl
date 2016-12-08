@@ -6,7 +6,7 @@ use WWW::UserAgent::Random;
 use Mojo::UserAgent;
 use String::CamelCase qw/camelize/;
 use File::Basename qw/fileparse/;
-
+use JSON qw/to_json/;
 use Carp qw/carp cluck/;
 
 use Data::Dumper;
@@ -25,6 +25,7 @@ require Exporter;
     fileparse
     chompf
     merge_space
+    to_json
 /;
 
 @EXPORT_OK = @EXPORT;
