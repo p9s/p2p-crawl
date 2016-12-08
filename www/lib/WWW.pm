@@ -21,12 +21,12 @@ sub startup {
     $self->plugin(
         'tt_renderer' => {
             template_options => {
-                DEBUG        => 1,
-                UNICODE      => 1,
-                ENCODING     => 'UTF-8',
-                PRE_CHOMP    => 1,
-                POST_CHOMP   => 1,
-                TRIM         => 1,
+                DEBUG      => 1,
+                UNICODE    => 1,
+                ENCODING   => 'UTF-8',
+                PRE_CHOMP  => 1,
+                POST_CHOMP => 1,
+                TRIM       => 1,
             }
         }
     );
@@ -41,6 +41,14 @@ sub startup {
     # Normal route to controller
     $r->get('/')->to('root#index');
     $r->get('/product/:haop2p_product_id')->to('product#index');
+    $r->get( '/about' )->to( 'about#index' );
+
+    $self->hook(
+        before_dispatch => sub {
+            my $c = shift;
+            $c->stash( sites => [ HaoP2P->rset( 'P2PSite' )->all ] );
+        }
+    );
 }
 
 1;

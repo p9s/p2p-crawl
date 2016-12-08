@@ -6,7 +6,7 @@
     <span class="alert label round">[% tag %]</span>
     [% END %]
     <p>
-      完成: <span>[% product.progress || 0 %]</span><span class="label">%</span>
+      完成: <span class="label">[% product.progress || 0 %]</span>
     </p>
     <p>
       利率: [% product.interest %]

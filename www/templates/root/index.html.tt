@@ -2,53 +2,37 @@
 
 </div>
 <div class="row">
-  <div class="small-2 large-8 columns">
+  <div class="small-2 large-9 columns">
     [% IF top_products %]
     <ul class="hover haop2p-products no-bullet">
       [% FOREACH product IN top_products %]
       <li>
-        <div class="row columns">
-          <a href="/product/[% product.id %]"><h5>[% product.title %]</h5></a>
-          <a class="button" href="/product/[% product.id %]">查看详情</a>
+        <div class="row columns" style="margin-bottom:0;display:inline-block; vertical-align:middle;">
+          <a href="/product/[% product.id %]"><strong style="font-size: 20px;">[% product.title %]</strong></a>
+          <a class="alert button small radius" style="margin-left: 20px;display:inline-block !important; vertical-align:middle !important; margin-bottom:0 !important;" href="[% product.site.aff_url %]" target="_blank">立即去投资</a>
         </div>
 
-        [% FOREACH tag IN product.tags %]
-        <span class="alert label round">[% tag %]</span>
-        [% END %]
-        <p>
-          完成: <span>[% product.progress || 0 %]</span><span class="label">%</span>
-        </p>
-        <p>
-          利率: [% product.interest %]
-        </p>
-        <p>
-          锁定：[% product.days || 0 %] 天
-        </p>
-        <p>
-          提现: [% product.pay_method %]
-        </p>
-        <p>
-          最小投资: [% product.min_amount %]
-        </p>
-        <p>
+       <div>
           [% FOREACH property IN product.properties %]
-          <span class="label"> [% property.label %]: [% property.value %]</span>
+          <span class="secondary label"> [% property.label %]: [% property.value %]</span>
           [% END %]
+        </div>
+        <p>
+          <span class="success label">项目状态: [% IF product.status == 'off' %]不[% END %]可投资</span>
         </p>
         <p>
-          项目状态: <span class="label">[% IF product.status == 'off' %]不[% END %]可投资</span>
-        </p>
-        <p>
-          加入时间: [% product.created_at.strftime( '%Y-%m-%d %H:%M:%S' ) %]
-        </p>
-        <p>
-          更新时间: [% product.updated_at.strftime( '%Y-%m-%d %H:%M:%S' ) %]
+          <small> 最后更新: [% product.updated_at.strftime( '%Y-%m-%d %H:%M:%S' ) %] </small>
+          <small> 加入时间: [% product.created_at.strftime( '%Y-%m-%d %H:%M:%S' ) %] </small>
         </p>
       </li>
+      [% UNLESS loop.last %]
+      <hr>
+      [% END %]
       [% END %]
     </ul>
     [% END %]
   </div>
-  <div class="small-2 large-: columns">
+  <div class="small-2 large-3 columns">
+    [% INCLUDE "layouts/sites.html.tt" %]
   </div>
 </div>

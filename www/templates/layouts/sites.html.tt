@@ -1,0 +1,23 @@
+<div style="margin-left: 10px;">
+    <h5 class="text-center">热门投资网站</h5>
+
+    <ul class="no-bullet" style="margin-left: 50px; margin-top: 25px;">
+        [% FOREACH site IN sites %]
+        [% IF site.aff_url || 1 %]
+        <li style="margin-top: 5px;">
+            <div class="row" style="margin-: 20px;">
+                <div class="medium-5 column sname">
+                    <a href="[% site.aff_url %]" target="_blank">[% site.name %]</a>
+                </div>
+                [% products = site.products.size %]
+                [% IF products > 0 %]
+                <div class="medium-6 column sname">
+                    <span class="label success round">[% products %]</span>
+                </div>
+                [% END %]
+            </div>
+        </li>
+        [% END %]
+        [% END %]
+    </ul>
+</div>

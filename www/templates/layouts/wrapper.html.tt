@@ -18,27 +18,12 @@
             </div>
             <div class="top-bar-right">
                 <ul class="menu">
-                    <li><a href="#">登陆</a></li>
-                    <li><a href="#">注册</a></li>
+                    [% INCLUDE links %]
                 </ul>
             </div>
         </div>
 
-        <div class="row">
-            <div class="medium-7 large-6 columns">
-                <img src="[% config.sites.static %]/img/big_icon.png" class="" alt="haop2p.net 最好的P2P资讯站">
-            </div>
-        </div>
-        <div class="row">
-            <ul class="menu">
-                <li><a href="#">首页</a></li>
-                <li><a href="#">活期理财</a></li>
-                <li><a href="#">定期理财</a></li>
-                <li><a href="#">P2P理财</a></li>
-            </ul>
-        </div>
-        <hr>
-        <div class="row">
+        <div class="row" style="margin-top: 15px;">
             [% content %]
         </div>
         <hr>
@@ -47,11 +32,7 @@
                 <div class="large-8  medium-8 grid-content">
                     <a ng-href="http://www.haop2p.net" href="http://www.haop2p.net"><img class="footer-logo" src="/img/haop2p.net.png" alt="Zurb logo"></a>
                     <ul class="menu">
-                        <li><a href="#">About</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">News</a></li>
-                        <li><a href="#">Contact</a></li>
-                        <li><a href="#">Sitemap</a></li>
+                        [% INCLUDE links %]
                     </ul>
                     <p class="copyright">© 2016 HaoP2P.net, Inc. All rights reserved.</p>
                 </div>
@@ -68,3 +49,10 @@
         </div>
     </body>
 </html>
+
+[% BLOCK links %]
+<li><a href="/">首页</a></li>
+<li><a href="/">投资理财</a></li>
+<li><a href="/about">关于HaoP2P</a></li>
+<li><a href="mailto:admin@haop2p.net?subject=feedback">联系我们</a></li>
+[% END %]
