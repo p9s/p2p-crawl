@@ -43,13 +43,14 @@ sub store {
     }
     elsif ( ref($items) eq 'HASH' ) {
         $self->_update_or_create_product($items);
-
     }
 }
 
 sub _update_or_create_product {
     my $self    = shift;
     my $item    = shift;
+    return unless $item->{uniq_id};
+
     my $product = $self->Site->find_product( $item->{uniq_id} );
     if ($product) {
         $product->update_product($item);

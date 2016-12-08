@@ -15,6 +15,7 @@ __PACKAGE__->add_columns(
     enabled    => { data_type => 'integer',  default_value => 0 },
     created_at => { data_type => 'datetime', default_value => \'CURRENT_TIMESTAMP' },
     site_index => { data_type => 'varchar',  default_value => '', size              => 32, },
+    aff_url    => { data_type => 'varchar',  is_nullable   => 1, },
 );
 
 __PACKAGE__->set_primary_key('id');
@@ -27,10 +28,10 @@ sub sqlt_deploy_hook {
 }
 
 sub find_product {
-    my $self = shift;
+    my $self    = shift;
     my $uniq_id = shift;
 
-    return $self->rset( 'Product')->search( { p2p_site_id => $self->id, uniq_id => $uniq_id }, { rows => 1 })->single;
+    return $self->rset('Product')->search( { p2p_site_id => $self->id, uniq_id => $uniq_id }, { rows => 1 } )->single;
 }
 
 sub create_product {

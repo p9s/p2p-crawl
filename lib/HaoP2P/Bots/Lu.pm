@@ -1,5 +1,6 @@
 package HaoP2P::Bots::Lu;
 use utf8;
+
 # ###############################
 # Author: Mc Cheung
 # Email:  mc.cheung@aol.com
@@ -127,7 +128,7 @@ sub search {
                     );
                 }
             );
-            $info->{status} = 'off' unless $info->{ status };
+            $info->{status} = 'off' unless $info->{status};
 
             fix_params($info);
             push @{ $info->{tags} }, 'P2P';
@@ -263,7 +264,9 @@ sub search {
 sub fix_params {
     my $info = shift;
     $info->{uniq_id} = $1 if $info->{url} =~ /product\/(\d+)\//;
-    $info->{uniq_id} = $1 if $info->{url} =~ /productId=(\d+)/;
+    unless ( $info->{uniq_id} ) {
+        $info->{uniq_id} = $1 if $info->{url} =~ /productId=(\d+)/;
+    }
     @{ $info->{tags} } = uniq @{ $info->{tags} };
 
     foreach my $property ( @{ $info->{properties} } ) {
