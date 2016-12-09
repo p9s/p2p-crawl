@@ -4,7 +4,7 @@
             <h5>[% product.title %] <small>[% product.uniq_id %]</small></h5>
         </div>
         <div class="row">
-            <div class="columns large-6">
+            <div class="columns large-7">
                 <p>
                 [% FOREACH tag IN product.tags %]
                 <span class="alert label round">[% tag %]</span>
@@ -19,7 +19,7 @@
             <div class="columns large-3">
                 <a class="button round alert btn-buy-now" href="[% product.site.aff_url %]" target="_blank">马上赚钱</a>
             </div>
-            <div class="columns large-3">
+            <div class="columns large-2">
             </div>
         </div>
 
