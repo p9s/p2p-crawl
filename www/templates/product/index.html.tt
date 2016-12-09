@@ -15,7 +15,7 @@
                 <p> 最小投资: [% product.min_amount %] </p>
             </div>
             <div class="columns large-3">
-                <a class="button round alert btn-buy-now" href="[% product.site.aff_url %]" target="_blank">去赚钱</a>
+                <a class="button round alert btn-buy-now" href="[% product.site.aff_url %]" target="_blank">马上赚钱</a>
             </div>
         </div>
 
