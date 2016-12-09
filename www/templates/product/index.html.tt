@@ -5,9 +5,11 @@
         </div>
         <div class="row">
             <div class="columns large-9">
+                <p>
                 [% FOREACH tag IN product.tags %]
                 <span class="alert label round">[% tag %]</span>
                 [% END %]
+                </p>
                 <p> 完成: <span class="label">[% product.progress || 0 %]</span> </p>
                 <p> 利率: [% product.interest %] </p>
                 <p> 锁定：[% product.days || 0 %] 天 </p>
