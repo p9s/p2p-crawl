@@ -1,4 +1,15 @@
 Mojolicious::Plugin::TtRenderer
 Mojolicious::Plugin::YamlConfig
 YAML::XS
-
+Moo
+Types::Standard
+namespace::clean
+strictures
+DBIx::Class::Schema
+DBIx::Class::InflateColumn::Serializer
+DateTime
+WWW::UserAgent::Random
+String::CamelCase
+JSON::MaybeXS
+MooX::ClassAttribute
+DateTime::Format::MySQL
