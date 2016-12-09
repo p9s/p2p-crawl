@@ -9,7 +9,7 @@
                 <div class="medium-5 column sname">
                     <a href="[% site.aff_url %]" target="_blank">[% site.name %]</a>
                 </div>
-                [% products = site.products.size %]
+                [% products = site.products.size || 0 %]
                 [% IF products > 0 %]
                 <div class="medium-6 column sname">
                     <span class="label success round">[% products %]</span>
