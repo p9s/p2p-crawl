@@ -5,39 +5,46 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="[% config.sites.static %]/css/foundation.css" rel="stylesheet">
+    <link href="[% config.sites.static %]/css/app.css" rel="stylesheet">
     <script type="text/javascript" src="[% config.sites.static %]/js/vendor/jquery.js"></script>
     <script type="text/javascript" src="[% config.sites.static %]/js/vendor/what-input.js"></script>
     <link rel="shortcut icon" type="image/x-icon" href="[% config.sites.static %]/favicon.ico" />
     </head>
     <body>
-        <div class="top-bar">
-            <div class="top-bar-left">
-                <ul class="menu accordion-menu" data-responsive-menu="accordion" role="tablist">
-                    <li class="menu-text subheader">欢迎来到HaoP2P，投资理财-乐在其中!</li>
-                </ul>
-            </div>
-            <div class="top-bar-right">
-                <ul class="menu">
+
+        <nav class="top-bar" data-topbar role="navigation">
+            <ul class="title-area v-align">
+                <li class="name">
+                    <h1><a href="/"> 欢迎来到HaoP2P，投资理财-乐在其中!</li></a></h1>
+                </li>
+            </ul>
+
+            <section class="top-bar-section">
+                <!-- Right Nav Section -->
+                <ul class="right">
                     [% INCLUDE links %]
                 </ul>
-            </div>
-        </div>
+
+                <!-- Left Nav Section -->
+                <ul class="left">
+                </ul>
+            </section>
+        </nav>
 
         <div class="row" style="margin-top: 15px;">
             [% content %]
         </div>
-        <hr>
         <div class="footer-bottom ng-scope">
             <div class="row">
-                <div class="large-8  medium-8 grid-content">
-                    <a ng-href="http://www.haop2p.net" href="http://www.haop2p.net"><img class="footer-logo" src="/img/haop2p.net.png" alt="Zurb logo"></a>
-                    <ul class="menu">
+                <div class="large-8  medium-8 grid-content column">
+                    <ul class="inline-list footer-links">
+                        <li> <a href="http://www.haop2p.net" class="footer-icon"></a></li>
                         [% INCLUDE links %]
                     </ul>
                     <p class="copyright">© 2016 HaoP2P.net, Inc. All rights reserved.</p>
                 </div>
-                <div class="large-4 medium-4 grid-content">
-                  <ul class="menu">
+                <div class="large-4 medium-4 grid-content sns-icon column">
+                  <ul class="inline-list">
                         <li><a href="http://twitter.com/haop2p"><img src="/img/twtter.png" alt="Twitter icon"></a></li>
                         <li><a href="http://facebook.com/haop2p"><img src="/img/facebook.png" alt="Facebook icon"></a></li>
                         <li><a href="http://facebook.com/haop2p"><img src="/img/gplus.png" alt="Google Plus icon"></a></li>

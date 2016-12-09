@@ -5,16 +5,15 @@
         [% FOREACH site IN sites %]
         [% IF site.aff_url || 1 %]
         <li style="margin-top: 5px;">
-            <div class="row" style="margin-: 20px;">
-                <div class="medium-5 column sname">
-                    <a href="[% site.aff_url %]" target="_blank">[% site.name %]</a>
-                </div>
+            <div class="row">
                 [% products = site.products.size || 0 %]
-                [% IF products > 0 %]
-                <div class="medium-6 column sname">
-                    <span class="label success round">[% products %]</span>
+                <div class="medium-12 column">
+                    <a href="[% site.aff_url %]" target="_blank">[% site.name %]
+                        [% IF products > 0 %]
+                        <span class="label success round" style="margin-left:25px;">[% products %]</span>
+                        [% END %]
+                    </a>
                 </div>
-                [% END %]
             </div>
         </li>
         [% END %]

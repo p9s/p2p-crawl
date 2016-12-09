@@ -1,0 +1,40 @@
+.footer-logo {
+    height: 40px;
+}
+
+.sns-icon ul li a img {
+    height: 30px;
+}
+
+.footer-bottom  {
+    background: #333;
+    padding: 24px 0 10px;
+}
+
+.footer-links li {
+    display: block;
+    float: left;
+    margin-left: 6px;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 0.77778rem;
+}
+
+.footer-links li a {
+    color: #666;
+    padding: 3px 6px;
+}
+.footer-bottom p.copyright {
+    margin: 6px 0 0;
+    font-size: 0.66667rem;
+    color: #666;
+}
+
+.top-bar {
+    height: 60px;
+}
+
+
+.v-align {
+    vertical-align:middle !important;
+}
