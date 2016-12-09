@@ -22,8 +22,8 @@
                     [% END %]
                 </div>
                 <div class="row">
-                    <small> 最后更新: [% product.updated_at.strftime( '%Y-%m-%d %H:%M:%S' ) %] </small>
-                    <small> 加入时间: [% product.created_at.strftime( '%Y-%m-%d %H:%M:%S' ) %] </small>
+                    <small> 最后更新: [% IF product.updated_at %] [% product.updated_at.strftime( '%Y-%m-%d %H:%M:%S' ) %][% END %] </small>
+                    <small> 加入时间: [% IF product.created_at %] [% product.created_at.strftime( '%Y-%m-%d %H:%M:%S' ) %][% END %] </small>
                 </div>
                 <div class="row">
                     <hr>
