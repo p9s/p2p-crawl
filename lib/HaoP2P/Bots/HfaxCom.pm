@@ -18,7 +18,7 @@ use feature qw/say/;
 use namespace::clean;
 
 has site       => ( is => 'ro', isa => Str, default => 'https://www.hfax.com' );
-has debug      => ( is => 'ro', isa => Int, default => 1 );
+has debug      => ( is => 'ro', isa => Int, default => 0 );
 has max_page   => ( is => 'rw', isa => Int, default => 99 );
 has site_index => ( is => 'ro', isa => Str, default => 'hfax_com' );
 extends 'HaoP2P::Bots';
@@ -31,7 +31,9 @@ sub search {
     my $url = $self->abs_url('/toFinanceList.do?m=5');
     full_logs("# GET $url") if $self->debug;
 
-    while ($url) {
+    my $max_page = $self->max_page;
+    while ( $url && $max_page ) {
+        $max_page--;
         full_logs("# GET $url") if $self->debug;
         my $tx = $self->ua->get($url)->res->dom;
         $tx->find('div[class~="listBox-Info"]')->each(
@@ -49,7 +51,7 @@ sub search {
                     full_logs("Next page: $url") if $self->debug;
                 }
 
-                full_logs("The $i items");
+                full_logs("The $i items") if $self->debug;
                 my $info = {};
 
                 $e->find('div[class="listBox-Info-left"]')->each(
@@ -128,83 +130,89 @@ sub search {
                 fix_params($info);
                 push @{ $info->{tags} }, '新手专享';
                 push @items, $info;    # unless $self->debug;
-
                 $self->store($info) unless $self->debug;
 
-           }
+            }
         );
+
         # findout next page
-        my $next_url = get_next_page( $tx );
-        $url = $next_url ? $self->abs_url( $next_url ) : undef;
+        my $next_url = get_next_page($tx);
+        $url = $next_url ? $self->abs_url($next_url) : undef;
     }
 
-
-
     # 惠理财
-    $url = $self->abs_url( 'toFinanceList.do?m=7');
-    while ( $url ) {
-        $tx = $self->get( $url )->res->dom;
-        $tx-find( 'div[class="listBox-Info clearfix"]')->each( 
+    $url      = $self->abs_url('toFinanceList.do?m=7');
+    $max_page = $self->max_page;
+    while ( $url && $max_page ) {
+        $max_page--;
+        my $tx = $self->ua->get($url)->res->dom;
+        $tx->find('div[class="listBox-Info clearfix"]')->each(
             sub {
                 my ( $e, $i ) = @_;
                 my $info = {};
-                # title 
-                $e->find( 'a[class="listBox-title"]')->each( 
+
+                # title
+                $e->find('a[class="listBox-title"]')->each(
                     sub {
                         my ( $e, $i ) = @_;
-                        $info->{ title } = $e->all_text;
-                        $info->{ url } = $self->abs_url( $e->attr( 'href' ) );
+                        $info->{title} = $e->all_text;
+                        $info->{url}   = $self->abs_url( $e->attr('href') );
                     }
                 );
 
-                # tags 
-                $e->find( 'div[class="listBox-wrap clearfix"]')->first->find( 'span')->each( 
+                # tags
+                $e->find('div[class="listBox-wrap clearfix"]')->first->find('span')->each(
                     sub {
                         my ( $e, $i ) = @_;
-                        push @{ $info->{ tags }}, $e->all_text;
+                        push @{ $info->{tags} }, $e->all_text;
                     }
                 );
 
                 # properties
-                $e->find( 'div[class="listBox-benefit-sider clearfix"] > ul > li')->each( 
+                $e->find('div[class="listBox-benefit-sider clearfix"] > ul > li')->each(
+                    sub {
+                        my ( $e, $i ) = @_;
+                            
+                        my $label = $e->find('p:first-child')->first;
+                        my $value = $e->find('p:last-child')->first;
+                        
+                        push @{ $info->{properties} },
+                            {
+                            label => $label->all_text,
+                            value => $value->all_text,
+                            };
+                    }
+                );
+                $e->find('p[class="total-mon listAmount"]')->each(
                     sub {
                         my ( $e, $i ) = @_;
 
-                        push @{ $info->{ properties } }, {
-                            label => $e->find( 'p:first-child')->all_text,
-                            value => $e->find( 'p:last-child')->all_text,
-                        };
-                    }
-                );
-                $e->find( 'p[class="total-mon listAmount"]')->each( 
-                    sub {
-                        my ( $e, $i ) = @_;
-                        
                         my $txt = $e->all_text;
-                        my ( $label, $value ) = split /\s+/, $txt, 2; 
-                        
-                        push @{ $info->{ properties }}, { label => $label, value => $value };
+                        my ( $label, $value ) = split /\s+/, $txt, 2;
+
+                        push @{ $info->{properties} }, { label => $label, value => $value };
                     }
                 );
 
-                # progress 
-                $info->{ progress } = $e->find( 'div[class="jindu-bar-box clearfix"] > span:first-child' )->all_text;
+                # progress
+                my $progress = $e->find('div[class="jindu-bar-box clearfix"] > span:first-child')->first;
+                $info->{progress} = $progress ? $progress->all_text : 0;
 
                 # status
-                $e->find( 'div.touzi-box-right > a')->each( 
+                $e->find('div.touzi-box-right > a')->each(
                     sub {
                         my $e = shift;
-                        $info->{ status } = $e->attr( 'class' ) eq 'already-btn' ? 'off' : 'on';
+                        $info->{status} = $e->attr('class') eq 'already-btn' ? 'off' : 'on';
                     }
                 );
 
                 fix_params($info);
                 push @{ $info->{tags} }, '惠理财';
                 push @items, $info;    # unless $self->debug;
+                $self->store($info) unless $self->debug;
             }
         );
     }
-
 
     return \@items;
 }
@@ -244,13 +252,13 @@ sub get_next_page {
     my $e = shift;
 
     my $url;
-    $e->find( 'div[class="pageDivClass"]')->each( 
+    $e->find('div[class="pageDivClass"]')->each(
         sub {
             my ( $e, $i ) = @_;
-            $e->find( 'a')->each( 
+            $e->find('a')->each(
                 sub {
                     my ( $e, $i ) = @_;
-                    $url = $e->attr( 'href') if $e->all_text =~ /下一页/;
+                    $url = $e->attr('href') if $e->all_text =~ /下一页/;
                 }
             );
         }
