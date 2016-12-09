@@ -38,7 +38,9 @@ sub create_product {
     my $self = shift;
     my $info = shift;
 
-    $info->{updated_at} = DateTime->now( time_zone => 'Asia/Shanghai' ) unless $info->{updated_at};
+    my $now = DateTime->now( time_zone => 'Asia/Shanghai' );
+    $info->{updated_at} = $now unless $info->{updated_at};
+    $info->{created_at} = $now unless $info->{created_at};
     return $self->create_related( 'products', $info );
 }
 
