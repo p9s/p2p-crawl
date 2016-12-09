@@ -7,9 +7,13 @@
         <ul class="hover haop2p-products no-bullet">
             [% FOREACH product IN top_products %]
             <li>
-                <div class="row" style="margin-bottom:0;display:inline-block; vertical-align:middle;">
-                    <a href="/product/[% product.id %]"><strong style="font-size: 20px;">[% product.title %]</strong></a>
-                    <a class="alert button small radius" style="margin-left: 20px;display:inline-block !important; vertical-align:middle !important; margin-bottom:0 !important;" href="[% product.site.aff_url %]" target="_blank">立即去投资</a>
+                <div class="row">
+                    <div class="columns small-9 row">
+                        <a href="/product/[% product.id %]"><strong style="font-size: 20px;">[% product.title %]</strong></a>
+                    </div>
+                    <div class="columns small-3">
+                        <a class="alert button small radius round"  href="[% product.site.aff_url %]" target="_blank">立即去投资</a>
+                    </div>
                 </div>
 
                 <div class="row">
