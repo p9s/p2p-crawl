@@ -1,38 +1,39 @@
-<div class="row column">
-  <div class="product-detail">
+<div class="product-detail large-8 columns">
     <div class="product">
-    <h5>[% product.title %] <small>[% product.uniq_id %]</small></h5>
-    [% FOREACH tag IN product.tags %]
-    <span class="alert label round">[% tag %]</span>
-    [% END %]
-    <p>
-      完成: <span class="label">[% product.progress || 0 %]</span>
-    </p>
-    <p>
-      利率: [% product.interest %]
-    </p>
-    <p>
-      锁定：[% product.days || 0 %] 天
-    </p>
-    <p>
-      提现: [% product.pay_method %]
-    </p>
-    <p>
-      最小投资: [% product.min_amount %]
-    </p>
-    <p>
-      [% FOREACH property IN product.properties %]
-      <span class="label"> [% property.label %]: [% property.value %]</span>
-      [% END %]
-    </p>
-    <p>
-      <span class="label">[% IF product.status == 'off' %]不[% END %]可投资</span>
-    </p>
-    <p>
-      [% product.created_at.strftime( '%Y-%m-%d %H:%M' ) %]
-    </p>
+        <div class="row">
+            <h5>[% product.title %] <small>[% product.uniq_id %]</small></h5>
+        </div>
+        <div class="row">
+            <div class="columns large-6">
+                [% FOREACH tag IN product.tags %]
+                <span class="alert label round">[% tag %]</span>
+                [% END %]
+                <p> 完成: <span class="label">[% product.progress || 0 %]</span> </p>
+                <p> 利率: [% product.interest %] </p>
+                <p> 锁定：[% product.days || 0 %] 天 </p>
+                <p> 提现: [% product.pay_method %] </p>
+                <p> 最小投资: [% product.min_amount %] </p>
+            </div>
+            <div class="columns large-4">
+                <a class="button round alert btn-buy-now" href="[% product.site.aff_url %]" target="_blank">去网站投资</a>
+            </div>
+        </div>
+
+        <div class="row">
+            <p>
+            <span class="label">[% IF product.status == 'off' %]不[% END %]可投资</span>
+            [% FOREACH property IN product.properties %]
+            <span class="label"> [% property.label %]: [% property.value %]</span>
+            [% END %]
+            </p>
+            <p>
+            <small>更新时间: [% product.updated_at.strftime( '%Y-%m-%d %H:%M' ) %] </small>
+            <small>创建时间: [% product.created_at.strftime( '%Y-%m-%d %H:%M' ) %] </small>
+            </p>
+        </div>
     </div>
-    <div class="product-buy">
-      <a class="button" href="[% product.url %]" target="_blank">去网站投资</a>
-   </div>
 </div>
+
+<div class="columns large-4">
+</div>
+

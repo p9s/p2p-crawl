@@ -43,7 +43,7 @@
                     </ul>
                     <p class="copyright">© 2016 HaoP2P.net, Inc. All rights reserved.</p>
                 </div>
-                <div class="large-4 medium-4 grid-content sns-icon column">
+                <div class="large-4 medium-4 grid-content sns-icon column" style="display:none">
                   <ul class="inline-list">
                         <li><a href="http://twitter.com/haop2p"><img src="/img/twtter.png" alt="Twitter icon"></a></li>
                         <li><a href="http://facebook.com/haop2p"><img src="/img/facebook.png" alt="Facebook icon"></a></li>
