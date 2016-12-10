@@ -1,5 +1,5 @@
-<div class="row haop2p-top-ads">
-
+<div class="row top_ads">
+    [% INCLUDE "widgets/top_ads.html.tt" %]
 </div>
 <div class="row">
     <div class="small-2 large-9 columns">

@@ -11,7 +11,6 @@
     <link rel="shortcut icon" type="image/x-icon" href="[% config.sites.static %]/favicon.ico" />
     </head>
     <body>
-
         <nav class="top-bar" data-topbar role="navigation">
             <ul class="title-area v-align">
                 <li class="name">
@@ -30,6 +29,7 @@
                 </ul>
             </section>
         </nav>
+
 
         <div class="row" style="margin-top: 15px;">
             [% content %]

@@ -39,5 +39,6 @@
 </div>
 
 <div class="columns large-4">
+    [% INCLUDE "widgets/right_ads.html.tt" %]
 </div>
 
