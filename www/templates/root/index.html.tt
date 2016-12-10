@@ -1,6 +1,8 @@
-<div class="row top_ads">
+<div class="row">
     [% INCLUDE "widgets/top_ads.html.tt" %]
 </div>
+[% INCLUDE "widgets/rules.html.tt" %]
+<hr>
 <div class="row">
     <div class="small-2 large-9 columns">
         [% IF top_products %]
@@ -9,12 +11,18 @@
             <li>
                 <div class="row">
                     <div class="columns small-9 row">
-                        <a href="/product/[% product.id %]"><strong style="font-size: 20px;">[% product.title %]</strong></a>
+                        <a href="/product/[% product.id %]"><strong style="font-size: 28px;">[% product.title %]</strong></a>
                     </div>
                     <div class="columns small-3">
                         <a class="alert button small radius round"  href="[% product.site.aff_url %]" target="_blank">立即去投资</a>
                     </div>
                 </div>
+                <div class="row">
+                    [% FOREACH tag IN product.tags %]
+                    <span class="secondary label round">[% tag %]</span>
+                    [% END %]
+                </div>
+
 
                 <div class="row">
                     <span class="success label">项目状态: [% IF product.status == 'off' %]不[% END %]可投资</span>
