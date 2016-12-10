@@ -54,6 +54,9 @@
 
             </div>
         </div>
+        <div class="script">
+            [% INCLUDE "widgets/analytics.html.tt" %]
+        </div>
     </body>
 </html>
 
