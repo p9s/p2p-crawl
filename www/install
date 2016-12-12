@@ -1,0 +1,6 @@
+#!/bin/bash
+echo "Begin install Perl modules......";
+
+while read line; do
+    cpm install -vg $line
+done < ./depend_modules
