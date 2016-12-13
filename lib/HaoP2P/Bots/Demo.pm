@@ -90,6 +90,8 @@ sub fix_params {
         if ( $label =~ /投资期限/ ) {
             $info->{days} = $1 if $value =~ /(\d+)/;
             $info->{days} = 0 unless $info->{days};
+            $info->{days} *= 30 if $label =~ /月/;
+            $info->{days} *= 30 * 12 if $label =~ /年/;
         }
 
         if ( $label =~ /起投金额/ ) {
