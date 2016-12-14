@@ -2,9 +2,15 @@
     <div class="row">
         <h3>[% site.name %]</h3>  
         <hr>
-        <p>[% site.about %]</p>
+        <div class="columns large-6">
+            [% INCLUDE "widgets/right_ads.html.tt" %]
+        </div>
+        <div class="columns large-6">
+            <p>[% site.about %]</p>
+        </div>
     </div>
-
+    <hr>
+    [% INCLUDE "widgets/pager.html.tt" %]
     <div class="row">
         [% FOREACH product IN products %]  
         [% INCLUDE "product/list.html.tt" %]
