@@ -41,12 +41,14 @@ sub startup {
     # Normal route to controller
     $r->get('/')->to('root#index');
     $r->get('/product/:haop2p_product_id')->to('product#index');
-    $r->get( '/about' )->to( 'about#index' );
+    $r->get('/about')->to('about#index');
+    $r->get('/sites')->to('site#index');
+    $r->get('/site/:site_id')->to('site#detail');
 
     $self->hook(
         before_dispatch => sub {
             my $c = shift;
-            $c->stash( sites => [ HaoP2P->rset( 'P2PSite' )->all ] );
+            $c->stash( sites => [HaoP2P->rset('P2PSite')->all] );
         }
     );
 }

@@ -16,6 +16,7 @@ __PACKAGE__->add_columns(
     created_at => { data_type => 'datetime', default_value => \'CURRENT_TIMESTAMP' },
     site_index => { data_type => 'varchar',  default_value => '', size              => 32, },
     aff_url    => { data_type => 'varchar',  is_nullable   => 1, },
+    about      => { data_type => 'text' },
 );
 
 __PACKAGE__->set_primary_key('id');
@@ -42,6 +43,13 @@ sub create_product {
     $info->{updated_at} = $now unless $info->{updated_at};
     $info->{created_at} = $now unless $info->{created_at};
     return $self->create_related( 'products', $info );
+}
+
+sub newest_products {
+    my $self  = shift;
+    my $page  = shift || 1;
+    my $attrs = { rows => '10', page => $page, order_by => { '-desc' => 'id' } };
+    return $self->search_related( 'products', undef, $attrs );
 }
 
 1;

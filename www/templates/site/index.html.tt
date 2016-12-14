@@ -1,0 +1,25 @@
+<div class="row">
+    <table role="grid">
+      <thead>
+          <tr>
+             <th>ID</th> 
+             <th>网站名称</th> 
+             <th>投资产品数量</th> 
+             <th>创建时间</th> 
+             <th>链接</th> 
+          </tr>
+      </thead>
+      <tbody>
+         [% FOREACH site IN sites %] 
+         <tr>
+            <td>[% site.id %]</td>   
+            <td><a href="/site/[% site.id %]">[% site.name %]</a></td>   
+            <td><a href="/site/[% site.id %]">[% site.products.size %]</a></td>   
+            <td>[% site.created_at.strftime( '%Y-%m-%d %H:%M:%S') %]</td>
+            <td><a href="/site/[% site.id %]"><span class="alert round radius label">查看投资</span></a>
+            <a href="[% site.aff_url %]" target="_blank"><span class="round radius label">查看原网站</span></a></td>
+         </tr>
+         [% END %]
+      </tbody>
+   </table>
+</div>

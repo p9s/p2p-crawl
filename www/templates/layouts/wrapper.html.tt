@@ -15,13 +15,13 @@
             <ul class="title-area v-align">
                 <li class="name">
                     <h1><a href="/"> 欢迎来到HaoP2P，投资理财-乐在其中!</li></a></h1>
-                </li>
+                    </li>
             </ul>
 
             <section class="top-bar-section">
                 <!-- Right Nav Section -->
                 <ul class="right">
-                    [% INCLUDE links %]
+                    [% INCLUDE "widgets/menu.html.tt" %]
                 </ul>
 
                 <!-- Left Nav Section -->
@@ -39,12 +39,12 @@
                 <div class="large-8  medium-8 grid-content column">
                     <ul class="inline-list footer-links">
                         <li> <a href="http://www.haop2p.net" class="footer-icon"></a></li>
-                        [% INCLUDE links %]
+                        [% INCLUDE "widgets/menu.html.tt" %]
                     </ul>
                     <p class="copyright">© 2016 HaoP2P.net, Inc. All rights reserved.</p>
                 </div>
                 <div class="large-4 medium-4 grid-content sns-icon column" style="display:none">
-                  <ul class="inline-list">
+                    <ul class="inline-list">
                         <li><a href="http://twitter.com/haop2p"><img src="/img/twtter.png" alt="Twitter icon"></a></li>
                         <li><a href="http://facebook.com/haop2p"><img src="/img/facebook.png" alt="Facebook icon"></a></li>
                         <li><a href="http://facebook.com/haop2p"><img src="/img/gplus.png" alt="Google Plus icon"></a></li>
@@ -60,9 +60,4 @@
     </body>
 </html>
 
-[% BLOCK links %]
-<li><a href="/">首页</a></li>
-<li><a href="/">投资理财</a></li>
-<li><a href="/about">关于HaoP2P</a></li>
-<li><a href="mailto:admin@haop2p.net?subject=feedback">联系我们</a></li>
-[% END %]
+

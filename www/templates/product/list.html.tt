@@ -1,0 +1,29 @@
+<div class="row">
+    <div class="columns small-9 row">
+        <a href="/product/[% product.id %]"><strong style="font-size: 28px;">[% product.title %]</strong></a>
+    </div>
+    <div class="columns small-3">
+        <a class="alert button small radius round"  href="[% product.site.aff_url %]" target="_blank">立即去投资</a>
+    </div>
+</div>
+<div class="row">
+    [% FOREACH tag IN product.tags %]
+    <span class="secondary label round">[% tag %]</span>
+    [% END %]
+</div>
+
+
+<div class="row">
+    <span class="success label">项目状态: [% IF product.status == 'off' %]不[% END %]可投资</span>
+</div>
+
+<div class="row">
+    [% FOREACH property IN product.properties %]
+    <span class="secondary label"> [% property.label %]: [% property.value %]</span>
+    [% END %]
+</div>
+<div class="row">
+    <small> 最后更新: [% IF product.updated_at %] [% product.updated_at.strftime( '%Y-%m-%d %H:%M:%S' ) %][% END %] </small>
+    <small> 加入时间: [% IF product.created_at %] [% product.created_at.strftime( '%Y-%m-%d %H:%M:%S' ) %][% END %] </small>
+</div>
+<div class="row"> <hr> </div>

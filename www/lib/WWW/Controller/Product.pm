@@ -12,8 +12,4 @@ sub index {
 }
 
 
-sub fuck {
-  my $c = shift;
-}
-
 1;

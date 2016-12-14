@@ -1,3 +1,4 @@
+[% IF pager %]
 <div class="pagination-centered">
     <ul class="pagination">
         <li> <a data-page="[% IF pager.first_page != pager.current_page; pager.first_page; END; %]">首页</a> </li>
@@ -5,7 +6,7 @@
         <li class="active"> <span>[% pager.current_page %]</span> </li>
         <li class="arrow"> <a data-page="[% pager.next_page %]">下一页</a> </li>
         <li> <a data-page="[% IF pager.last_page != pager.current_page; pager.last_page; END; %]">末页</a> </li>
-    <span class="label round secondary radius"> 共有 [% pager.last_page %] 页, [% pager.total_entries.chunk(-3).join(',') %] 条记录 </span> 
+        <span class="label round secondary radius"> 共有 [% pager.last_page %] 页, [% pager.total_entries.chunk(-3).join(',') %] 条记录 </span> 
     </ul>
 </div>
 
@@ -29,3 +30,4 @@ $(".pagination a").map(function(i, e) {
     $e.attr("href", url);
 });
 </script>
+[% END %]
