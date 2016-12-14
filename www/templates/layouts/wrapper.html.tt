@@ -57,6 +57,9 @@
         <div class="script">
             [% INCLUDE "widgets/analytics.html.tt" %]
         </div>
+        <div class="script">
+            [% INCLUDE "widgets/tongji.html.tt" %]
+        </div>
     </body>
 </html>
 
