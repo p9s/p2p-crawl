@@ -9,14 +9,16 @@ extends 'HaoP2P::Schema::Result';
 
 __PACKAGE__->table('p2p_site');
 __PACKAGE__->add_columns(
-    id         => { data_type => 'integer',  is_nullable   => 0,  is_auto_increment => 1 },
-    name       => { data_type => 'varchar',  is_nullable   => 0,  size              => 255 },
-    url        => { data_type => 'varchar',  is_nullable   => 0,  size              => 255 },
-    enabled    => { data_type => 'integer',  default_value => 0 },
-    created_at => { data_type => 'datetime', default_value => \'CURRENT_TIMESTAMP' },
-    site_index => { data_type => 'varchar',  default_value => '', size              => 32, },
-    aff_url    => { data_type => 'varchar',  is_nullable   => 1, },
-    about      => { data_type => 'text' },
+    id          => { data_type => 'integer',  is_nullable   => 0,   is_auto_increment => 1 },
+    name        => { data_type => 'varchar',  is_nullable   => 0,   size              => 255 },
+    url         => { data_type => 'varchar',  is_nullable   => 0,   size              => 255 },
+    enabled     => { data_type => 'integer',  default_value => 0 },
+    created_at  => { data_type => 'datetime', default_value => \'CURRENT_TIMESTAMP' },
+    site_index  => { data_type => 'varchar',  default_value => '',  size              => 32, },
+    aff_url     => { data_type => 'varchar',  is_nullable   => 1, },
+    about       => { data_type => 'text' },
+    description => { data_type => 'varchar',  size          => 255, default           => '' },
+    keywords    => { data_type => 'varchar',  size          => 254, default           => '' },
 );
 
 __PACKAGE__->set_primary_key('id');

@@ -1,0 +1,43 @@
+#!/usr/bin/env perl
+use utf8;
+use strict;
+use warnings;
+use FindBin qw/$Bin/;
+use lib "$Bin/../../lib";
+use Pod::Usage;
+use Getopt::Long;
+use HaoP2P;
+use feature qw/say/;
+
+use Mojo::UserAgent;
+
+my $site_rs = HaoP2P->rset('P2PSite');
+my $ua      = Mojo::UserAgent->new;
+$ua = $ua->max_redirects(5);
+
+foreach my $site ( $site_rs->all ) {
+    say $site->url;
+    my $tx = $ua->get( $site->url => { 'User-Agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36' } );
+
+    my $dom = $tx->res->dom;
+
+    $dom->find('meta')->each(
+        sub {
+            my ( $e, $i ) = @_;
+
+            my $name  = $e->attr('name');
+            my $value = $e->attr('content');
+
+            if ( $name && $value ) {
+                $site->update( { description => $value } ) if $name eq 'description';
+                $site->update( { keywords    => $value } ) if $name eq 'keywords';
+            }
+        }
+    );
+}
+
+__END__
+$ua->get('http://example.com' => json => {a => 'b'} => sub {
+  my ($ua, $tx) = @_;
+  say $tx->res->body;
+});

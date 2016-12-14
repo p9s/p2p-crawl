@@ -1,0 +1,32 @@
+#!/usr/bin/env perl
+use utf8;
+use strict;
+use warnings;
+use FindBin qw/$Bin/;
+use lib "$Bin/../../lib";
+use Pod::Usage;
+use Getopt::Long;
+use HaoP2P;
+use feature qw/say/;
+
+use Mojo::UserAgent;
+
+my $site_rs = HaoP2P->rset('P2PSite');
+
+my $keywords;
+
+foreach my $site ( $site_rs->all ) {
+   $keywords .= $site->keywords . ', ';   
+}
+
+
+my %ks;
+foreach my $k ( split /[\s,]/, $keywords ) {
+    chomp( $k );
+    $k = uc( $k );
+    $ks{$k}++;
+}
+
+
+map { say $_ . "\t" . $ks{$_} } keys %ks;
+
