@@ -48,18 +48,21 @@ sub search {
 
                 # title
                 # tags, don't forget manual tag, forexample: '新手专享';
-
-                # $value = chompf($value);
-                # $value = merge_space($value);
-                # properties
-
+                # interest
+                # days
+                # pay_method
+                # min_amount
                 # progress
-                # total amount
 
                 # status 'on/off'
 
                 # url
                 # uniq_id
+
+
+                # $value = chompf($value);
+                # $value = merge_space($value);
+                # properties
 
                 $info = fix_params($info);
                 push @items, $info;    # unless $self->debug;

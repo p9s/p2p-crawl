@@ -32,6 +32,16 @@ sub abs_url {
     return URI->new_abs( $url, $self->site )->canonical->as_string;
 }
 
+sub abs_url_with_params {
+    my $self   = shift;
+    my $url    = shift;
+    my $params = shift;
+
+    my $uri = URI->new_abs( $url, $self->site );
+    $uri->query_form($params) if $params;
+    return $uri->canonical->as_string;
+}
+
 sub store {
     my $self  = shift;
     my $items = shift;
