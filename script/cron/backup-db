@@ -1,0 +1,26 @@
+#!/usr/bin/env perl
+use utf8;
+use strict;
+use warnings;
+use FindBin qw/$Bin/;
+use lib "$Bin/../../lib";
+use HaoP2P;
+use DateTime;
+
+my $now = DateTime->now( time_zone => 'Asia/Shanghai' );
+my $backup_file = sprintf( '%s/logs/db/haop2p-%s.sql', HaoP2P->root, $now->strftime('%Y%m%d%H%M%S') );
+my $db_config   = HaoP2P->config->{DBI};
+my $dsn         = $$db_config[0];
+my $db_user     = $$db_config[1];
+my $db_password = $$db_config[2];
+my ($db_name)   = ( $dsn =~ /=(\w+)/ );
+
+my $cmd = sprintf( 'mysqldump --skip-comments -u %s -p%s %s > %s', $db_user, $db_password, $db_name, $backup_file );
+system($cmd);
+
+if ( -e $backup_file ) {
+    my $backup_gz_file = sprintf( '%s.gz', $backup_file );
+    $cmd = sprintf( 'gzip -c %s > %s', $backup_file, $backup_gz_file );
+    system($cmd);
+    system("rm $backup_file");
+}
