@@ -8,7 +8,7 @@ use HaoP2P;
 use DateTime;
 
 my $now = DateTime->now( time_zone => 'Asia/Shanghai' );
-my $backup_file = sprintf( '%s/logs/db/haop2p-%s.sql', HaoP2P->root, $now->strftime('%Y%m%d%H%M%S') );
+my $backup_file = sprintf( '%s/logs/db/haop2p-%s.sql', HaoP2P->root, $now->strftime('%Y%m%d') );
 my $db_config   = HaoP2P->config->{DBI};
 my $dsn         = $$db_config[0];
 my $db_user     = $$db_config[1];
