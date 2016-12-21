@@ -34,7 +34,7 @@ sub search {
     while ( $url && $max_page ) {
         $max_page--;
         full_logs("# GET $url") if $self->debug;
-        my $tx = $self->ua->get($url)->res->dom;
+        my $tx = $self->ua->max_redirects(3)->get($url)->res->dom;
         $tx->find('div[class~="listBox-Info"]')->each(
             sub {
                 my ( $e, $i ) = @_;
