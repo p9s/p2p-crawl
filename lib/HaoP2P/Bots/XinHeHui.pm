@@ -18,8 +18,8 @@ use feature qw/say/;
 use namespace::clean;
 
 has site       => ( is => 'ro', isa => Str, default => 'https://www.xinhehui.com' );
-has debug      => ( is => 'ro', isa => Int, default => 1 );                            # fix_me_last
-has max_page   => ( is => 'rw', isa => Int, default => 99 );
+has debug      => ( is => 'ro', isa => Int, default => 0 );                            # fix_me_last
+has max_page   => ( is => 'rw', isa => Int, default => 999 );
 has site_index => ( is => 'ro', isa => Str, default => 'xinhehui_com' );               # hfax_com
 extends 'HaoP2P::Bots';
 
