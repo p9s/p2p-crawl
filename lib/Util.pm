@@ -26,11 +26,19 @@ require Exporter;
     chompf
     merge_space
     to_json
+    clean_text
 /;
 
 @EXPORT_OK = @EXPORT;
 
 our $DEBUG = 0;
+
+
+sub clean_text {
+    my $str = shift;
+    return unless $str;
+    return merge_space( chompf( $str ) );
+}
 
 sub merge_space {
     my $str = shift;

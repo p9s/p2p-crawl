@@ -29,7 +29,6 @@ sub search {
 
     # 新手专区
     my $url = $self->abs_url('fix_me' ); #/toFinanceList.do?m=5
-    full_logs("# GET $url") if $self->debug;
 
     my $max_page = $self->max_page;
     while ( $url && $max_page ) {
