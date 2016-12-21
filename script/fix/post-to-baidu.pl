@@ -8,14 +8,22 @@ use Pod::Usage;
 use Getopt::Long;
 use HaoP2P;
 
-
-my $product_rs = HaoP2P->rset( 'Product' );
+my $product_rs = HaoP2P->rset('Product');
 
 open my $fh, '>', 'urls.txt' || die $!;
-foreach my $product ( $product_rs->all ) {
-#push @urls, sprintf( '%s/%s', 'http://www.haop2p.net/product', $product->id );
-    print $fh sprintf( "%s/%s\n", 'http://www.haop2p.net/product', $product->id );
-}
-close $fh;
+my $items = 0;
 
-`curl -H 'Content-Type:text/plain' --data-binary @urls.txt "http://data.zz.baidu.com/urls?site=www.haop2p.net&token=cxDxKFfzIp3jwtf3"`
+foreach my $product ( $product_rs->all ) {
+    if ( $items < 2000 ) {
+        print $fh sprintf( "%s/%s\n", 'http://www.haop2p.net/product', $product->id );
+    } else {
+        close $fh;
+        my @results = `curl -H 'Content-Type:text/plain' --data-binary \@urls.txt "http://data.zz.baidu.com/urls?site=www.haop2p.net&token=cxDxKFfzIp3jwtf3"`;
+        print "@results\n";
+
+        open $fh, '>', 'urls.txt' || die $!;
+        $items = 0;
+    }
+    $items++;
+}
+
