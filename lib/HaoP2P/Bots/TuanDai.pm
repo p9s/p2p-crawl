@@ -82,9 +82,9 @@ sub search {
                 }
 
                 # min_amount
-                my $min_amount = $e->find( 'span[class="g9 ml5  f12 "]')->first; 
+                my $min_amount = $e->find( 'span[class~="g9 ml5  f12"]')->first; 
                 $info->{min_amount} = $min_amount->all_text if $min_amount;
-                ($info->{min_amount}) = $info->{min_amount} =~ /\d+/ if $info->{min_amount};
+                ($info->{min_amount}) = $info->{min_amount} =~ /(\d+)/ if $info->{min_amount};
                 
                 # progress
 
