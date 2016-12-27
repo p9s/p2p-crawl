@@ -51,7 +51,7 @@ sub newest_products {
     my $self  = shift;
     my $page  = shift || 1;
     my $attrs = { rows => '10', page => $page, order_by => { '-desc' => 'id' } };
-    return $self->search_related( 'products', undef, $attrs );
+    return $self->search_related( 'products', { status => 'on' }, $attrs );
 }
 
 1;
