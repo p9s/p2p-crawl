@@ -18,7 +18,7 @@ use feature qw/say/;
 use namespace::clean;
 
 has site       => ( is => 'ro', isa => Str, default => 'https://www.tuandai.com/' );
-has debug      => ( is => 'ro', isa => Int, default => 1 );                            # fix_me_last
+has debug      => ( is => 'ro', isa => Int, default => 0 ); 
 has max_page   => ( is => 'rw', isa => Int, default => 99 );
 has site_index => ( is => 'ro', isa => Str, default => 'tuandai_com' );
 extends 'HaoP2P::Bots';
