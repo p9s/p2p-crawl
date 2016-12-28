@@ -1,8 +1,4 @@
 <div class="row">
-    [% INCLUDE "widgets/top_ads.html.tt" %]
-</div>
-
-<div class="row">
     <div class="columns small-9 row">
         <a href="/product/[% product.id %]"><strong style="font-size: 28px;">[% product.title %]</strong></a>
     </div>

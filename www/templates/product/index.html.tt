@@ -1,4 +1,9 @@
 <div class="row">
+    [% INCLUDE "widgets/top_ads.html.tt" %]
+</div>
+
+
+<div class="row">
     <div class="product-detail large-8 columns">
         <div class="product">
             <div class="row">
