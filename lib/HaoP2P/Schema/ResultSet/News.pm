@@ -3,6 +3,7 @@ use utf8;
 use strict;
 use warnings;
 use feature qw/say/;
+use DateTime;
 
 use base 'HaoP2P::Schema::ResultSet';
 
@@ -36,6 +37,7 @@ sub create_news {
     return unless $params->{title};
     return unless $params->{uniq_id};
     return unless $params->{content};
+    $params->{created_at} = DateTime->now( time_zone => 'Asia/Shanghai' );
     $params->{descript} = '' unless $params->{descript};
     return $self->create($params);
 }
