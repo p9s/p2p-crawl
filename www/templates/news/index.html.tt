@@ -1,0 +1,26 @@
+<div class="row">
+    [% INCLUDE "widgets/top_ads.html.tt" %]
+</div>
+
+<div class="row">
+    <div class="large-8 columns">
+        [% INCLUDE 'widgets/pager.html.tt' %]
+        [% FOREACH news IN top_news %]
+            [% INCLUDE "news/news.html.tt" %]
+        [% END %]
+        [% INCLUDE 'widgets/pager.html.tt' %]
+    </div>
+
+    <div class="columns large-4">
+        <div class="row">
+            [% INCLUDE "widgets/right_ads.html.tt" %]
+        </div>
+
+        <div class="row top_news">
+            <!-- 相关新闻  --> 
+        </div>
+    </div>
+</div>
+<div class="row" style="margin-bottom: 20px;">
+    [% INCLUDE "widgets/top_ads.html.tt" %]
+</div>

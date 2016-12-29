@@ -1,0 +1,90 @@
+#!/usr/bin/env perl
+use utf8;
+use strict;
+use warnings;
+use FindBin qw/$Bin/;
+use lib "$Bin/../../lib";
+use HaoP2P;
+use DateTime;
+use Util;
+use HaoP2P::Bots;
+use Data::Dumper;
+
+my $now = DateTime->now( time_zone => 'Asia/Shanghai' );
+
+my $news_rs = HaoP2P->rset("News");
+
+my $bot = HaoP2P::Bots->new;
+
+my $pages       = 1;
+my $uniq_prefix = 'wdzj_com';
+
+while ($pages) {
+    my $url = sprintf( 'http://www.wdzj.com/news/gundong/p%s.html', $pages );
+    full_logs("# $url");
+    my $tx = $bot->ua->get($url)->res->dom;
+    $pages = 0 && next unless $tx;
+
+    $tx->find('div[class="text"] h3 a')->each(
+        sub {
+            my $e = shift;
+
+            my $href = $e->attr('href') if $e;
+            my ($news_id) = $href =~ /([^\/\.]+)\.html/ if $href;
+            $news_id =~ s/-/_/g if $news_id;
+            my $uniq_id = sprintf( "%s_%s", $uniq_prefix, $news_id ) if $news_id;
+
+            if ( $uniq_id && not $news_rs->is_exists($uniq_id) ) {
+                full_logs("## $href");
+                my $dom = $bot->ua->get($href)->res->dom;
+
+                if ($dom) {
+                    # remove all video bind
+                    $dom->find('script')->each( sub { $_[0]->remove } );
+
+                    my $news = {};
+                    $news->{uniq_id} = $uniq_id;
+                    $news->{url}     = $href;
+                    my $title = $dom->find('h1[class="s-title"]')->first;
+                    $news->{title} = clean_text( $title->all_text ) if $title;
+
+                    $dom->find('div[class="s-bq"] span')->each(
+                        sub {
+                            my $e = shift;
+                            push @{ $news->{tags} }, clean_text( $e->all_text ) if $e;
+                        }
+                    );
+
+                    my $descript = $dom->find('div[class="s-zy"] span')->first;
+                    $descript = $descript->all_text if $descript;
+                    $descript =~ s/\n\s+\n/\n/gm   if $descript;
+                    $descript =~ s/\n\s+/\n/gm     if $descript;
+                    $descript =~ s/<br>//g         if $descript;
+                    $descript =~ s/<br\s*\/\s*>//g if $descript;
+                    $descript =~ s/^\s+//g         if $descript;
+                    $descript =~ s/[\r\n]+/<br\/>/g         if $descript;
+
+                    $news->{descript} = $descript if $descript;
+
+                    my $txt;
+                    $dom->find('div[class="c-cen"]')->each(
+                        sub {
+                            my $e = shift;
+                            $txt .= $e->all_text;
+                        }
+                    );
+
+                    $news->{content} = $txt if $txt;
+                    my $tmp = $news_rs->create_news($news);
+                }
+            }
+        }
+    );
+
+    if ( $tx->find('div[class="pagebox"] a')->grep( sub { $_->all_text =~ /下一页/ } )->size > 0 ) {
+        $pages++;
+    }
+    else {
+        undef $pages;
+    }
+}

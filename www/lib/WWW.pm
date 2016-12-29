@@ -44,6 +44,8 @@ sub startup {
     $r->get('/about')->to('about#index');
     $r->get('/sites')->to('site#index');
     $r->get('/site/:site_id')->to('site#detail');
+    $r->get('/news')->to('news#index');
+    $r->get('/news/:news_id/:news_title')->to('news#detail');
 
     $self->hook(
         before_dispatch => sub {

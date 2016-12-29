@@ -47,3 +47,11 @@
     display: block;
     height: 80px;
 }
+
+.news h1 {
+    font-size: 1.8rem;
+}
+
+.news-related h1 {
+    font-size: 0.8rem;
+}

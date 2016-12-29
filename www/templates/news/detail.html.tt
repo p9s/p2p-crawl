@@ -1,0 +1,40 @@
+<div class="row">
+    [% INCLUDE "widgets/top_ads.html.tt" %]
+</div>
+
+<div class="row">
+    <div class="columns large-9 news">
+        <h1>[% news.title %]</h1>
+        <div>
+            [% FOREACH tag IN news.tags %]  
+            <span class="label secondary">[% tag %]</span>
+            [% END %]
+        </div>
+        <div class="descript">
+            [% IF news.descript %]
+            <small>摘要: [% news.descript %]</small>
+            [% END %]
+        </div>
+        <hr>
+        <div class="content">
+            [% news.content.replace( "\r\n", "<br/>" ) %] 
+        </div>
+    </div>
+    <div class="columns large-3">
+        <div class="news-related">
+            [% FOREACH news IN news_related %]
+            [% INCLUDE "news/related.html.tt" %]
+            [% END %]
+        </div>
+        <div class="row">
+            [% INCLUDE "widgets/right_ads.html.tt" %]
+        </div>
+
+    </div>
+</div>
+<div class="row"> <hr> </div>
+<div class="row">
+    [% INCLUDE "widgets/top_ads.html.tt" %]
+</div>
+
+

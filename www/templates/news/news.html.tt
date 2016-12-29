@@ -1,0 +1,12 @@
+<div class="row news">
+    <h1><a href="/news/[% news.id %]/[% news.title %]" target="_blank">[% news.title %]</a></h1>
+    <div>
+        [% FOREACH tag IN news.tags %]  
+            <span class="label secondary">[% tag %]</span>
+        [% END %]
+    </div>
+    <div class="descript">
+       摘要: [% IF news.descript %] [% news.descript %] [% ELSE %][% news.content.left( 100 ) %] [% END %]
+    </div>
+</div>
+<div class="row"> <hr> </div>
