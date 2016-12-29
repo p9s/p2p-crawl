@@ -71,16 +71,16 @@ sub search {
 
             my $status = $e->find('div[class="dw0 qt1"] div a')->first;
             if ($status) {
-
-                # uniq_id
-                my $uniq_id = $status->attr('onclick');
-                ( $info->{uniq_id} ) = $uniq_id =~ /,(\d+),/ if $uniq_id;
-
-                $info->{status} = clean_text( $status->all_text );
-
+                
+                 $info->{status} = clean_text( $status->all_text );
                 # status 'on/off'
                 $info->{status} = $info->{status} eq '投资' ? 'on' : 'off';
             }
+            
+            # uniq_id
+            my $uniq_id = $e->find( 'div[class="zqlist"]')->first;
+            $uniq_id = $uniq_id->attr( 'onclick' ) if $uniq_id;
+            ( $info->{uniq_id} ) = $uniq_id =~ /\((\d+)\)/ if $uniq_id;
 
             # url
             $info->{url} = $url;
@@ -104,7 +104,6 @@ sub search {
 
             $info = fix_params($info);
 
-            die Dumper $info;
             push @items, $info;    # unless $self->debug;
             $self->store($info) unless $self->debug;
             undef $item;
