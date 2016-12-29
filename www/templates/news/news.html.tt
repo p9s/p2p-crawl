@@ -6,7 +6,7 @@
         [% END %]
     </div>
     <div class="descript">
-       摘要: [% IF news.descript %] [% news.descript %] [% ELSE %][% news.content.left( 100 ) %] [% END %]
+       摘要: [% IF news.descript %] [% news.descript %] [% ELSE %][% news.content.substr( 0, 200 ) %] [% END %]
     </div>
 </div>
 <div class="row"> <hr> </div>
