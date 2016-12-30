@@ -8,7 +8,8 @@ sub index {
   my $product_rs = HaoP2P->rset( 'Product' );
   my $product = $product_rs->find( $product_id );
 
-  $c->render( product => $product );
+  $c->stash( product => $product );
+  $c->stash( title => $product->title );
 }
 
 

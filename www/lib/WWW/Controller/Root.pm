@@ -12,6 +12,7 @@ sub index {
     my $products = $product_rs->top_products( $page, $items );
     $c->stash( top_products => [$products->all] );
     $c->stash( pager        => $products->pager );
+    $c->stash( title        => '最新理财产品' );
 }
 
 1;

@@ -17,6 +17,7 @@ sub index {
     my $news = $news_rs->top_news( $page, $items );
     $c->stash( top_news => [$news->all] );
     $c->stash( pager    => $news->pager );
+    $c->stash( title => '最新理财新闻');
 }
 
 sub detail {
@@ -24,9 +25,11 @@ sub detail {
     my $news_id    = $c->stash('news_id');
     my $news_title = $c->stash('news_title');
 
-    $c->stash( news => $news_rs->find($news_id) );
+    my $detail_news = $news_rs->find( $news_id );
+    $c->stash( news => $detail_news );
     my $news = $news_rs->top_news( 1, 20 );
     $c->stash( news_related => [$news->all] );
+    $c->stash( title => $detail_news->title );
 }
 
 1;
