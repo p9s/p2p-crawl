@@ -10,7 +10,7 @@
     <link href="[% config.sites.static %]/css/app.css" rel="stylesheet">
     <script type="text/javascript" src="[% config.sites.static %]/js/vendor/jquery.js"></script>
     <script type="text/javascript" src="[% config.sites.static %]/js/vendor/what-input.js"></script>
-    <link rel="shortcut icon" type="image/x-icon" href="[% config.sites.static %]/favicon.ico" />
+    <link rel="shortcut icon" type="image/x-icon" href="[% config.sites.static %]/favicon.png" />
     </head>
     <body>
         <nav class="top-bar" data-topbar role="navigation">
