@@ -15,10 +15,12 @@
             <small>摘要: [% news.descript %]</small>
             [% END %]
         </div>
+        [% INCLUDE "widgets/share.html.tt" %]
         <hr>
         <div class="content">
             [% news.content.replace( "\r\n", "<br/>" ) %] 
         </div>
+        [% INCLUDE "widgets/share.html.tt" %]
     </div>
     <div class="columns large-3">
         <div class="news-related">
