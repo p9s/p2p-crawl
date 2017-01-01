@@ -76,6 +76,7 @@ while ($pages and $pages < 5) {
                     
                     $txt =~ s/^\s{2,}/  /;
                     $news->{content} = $txt if $txt;
+                    $news->{is_public} = 1;
                     my $tmp = $news_rs->create_news($news);
                 }
             }
