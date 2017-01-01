@@ -19,7 +19,7 @@ my $bot = HaoP2P::Bots->new;
 my $pages       = 1;
 my $uniq_prefix = 'wdzj_com';
 
-while ($pages) {
+while ($pages and $pages < 5) {
     my $url = sprintf( 'http://www.wdzj.com/news/gundong/p%s.html', $pages );
     full_logs("# $url");
     my $tx = $bot->ua->get($url)->res->dom;
