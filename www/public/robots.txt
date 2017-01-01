@@ -4,4 +4,7 @@
 User-agent: WEBDAV Client
 Disallow: /*
 
+User-agent: MJ12bot
+Disallow: /
+
 User-agent: *
