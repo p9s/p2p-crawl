@@ -11,7 +11,7 @@ use feature qw/say state/;
 use namespace::clean;
 
 has Site => ( is => 'ro', isa => InstanceOf ['HaoP2P::Schema::Result::P2PSite'], builder => 1, lazy => 1 );
-has ua => ( is => 'ro', isa => InstanceOf ['Mojo::UserAgent'], builder => 1, lazy => 1 );
+has ua => ( is => 'rw', isa => InstanceOf ['Mojo::UserAgent'], builder => 1, lazy => 1 );
 
 sub _build_Site {
     my $self = shift;
