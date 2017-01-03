@@ -1,0 +1,104 @@
+#!/usr/bin/env perl
+use utf8;
+use strict;
+use warnings;
+use FindBin qw/$Bin/;
+use lib "$Bin/../../lib";
+use HaoP2P;
+use DateTime;
+use Util;
+use HaoP2P::Bots;
+use Data::Dumper;
+use Digest::MD5 qw/md5_hex/;
+use URI;
+
+my $total_pages = shift || 5;
+
+my $now = DateTime->now( time_zone => 'Asia/Shanghai' );
+my $news_rs = HaoP2P->rset("News");
+
+my $bot = HaoP2P::Bots->new;
+
+my $pages       = 1;
+my $uniq_prefix = 'investopedia_com';
+$bot->ua( $bot->ua->max_redirects(3) );
+
+while ($pages and $pages < $total_pages ) {
+    my $url = sprintf( 'http://www.investopedia.com/personal-finance/credit-loans-mortgages/?page=%s', $pages );
+    full_logs("# $url");
+    my $tx = $bot->ua->get($url)->res->dom;
+    $pages = 0 && next unless $tx;
+
+    $tx->find('h3[class="item-title"] a')->each(
+        sub {
+            my $e = shift;
+
+            my $href = $e->attr('href') if $e;
+            $href = URI->new_abs( $href, 'http://www.investopedia.com/' )->canonical->as_string if $href;
+            my $news_id = md5_hex( $href ) if $href;
+            my $uniq_id = sprintf( "%s_%s", $uniq_prefix, $news_id ) if $news_id;
+
+            print "$uniq_id\n";
+            if ( $uniq_id && not $news_rs->is_exists($uniq_id) ) {
+                full_logs("## $href");
+                my $dom = $bot->ua->get($href)->res->dom;
+
+                if ($dom) {
+                    # remove all video bind
+                    $dom->find('script')->each( sub { $_[0]->remove } );
+
+                    my $news = {};
+                    $news->{uniq_id} = $uniq_id;
+                    $news->{url}     = $href;
+                    my $title = $dom->find('h1')->first;
+                    $news->{title} = clean_text( $title->all_text ) if $title;
+
+                    $dom->find('span[class="by-author"]')->each(
+                        sub {
+                            my $e = shift;
+                            my $txt = clean_text( $e->all_text ) if $e;
+                            my @tags = split /|/, $txt if $txt;
+                            map { push @{ $news->{tags} }, clean_text( $_ ) } @tags if @tags; 
+                        }
+                    );
+
+                    push @{ $news->{tags} }, 'haop2p.net';
+                    push @{ $news->{tags} }, 'p2p';
+                    push @{ $news->{tags} }, 'Personal Finance';
+
+                    my $descript = $dom->find('meta[name="description"]')->first;
+                    $descript = $descript->all_text if $descript;
+                    $descript =~ s/\n\s+\n/\n/gm   if $descript;
+                    $descript =~ s/\n\s+/\n/gm     if $descript;
+                    $descript =~ s/<br>//g         if $descript;
+                    $descript =~ s/<br\s*\/\s*>//g if $descript;
+                    $descript =~ s/^\s+//g         if $descript;
+                    $descript =~ s/[\r\n]+/<br\/>/g         if $descript;
+                    $descript .= ' happ2p.net' if $descript;
+
+                    $news->{descript} = $descript ? $descript : 'haop2p.net FCA finance';
+
+                    my $txt;
+                    $dom->find('div[class="content-box"] p')->each(
+                        sub {
+                            my $e = shift;
+                            $txt .= $e->all_text . "<br/>";
+                        }
+                    );
+                    
+                    #$txt =~ s/^\s{2,}/  /;
+                    $news->{content} = $txt if $txt;
+                    $news->{is_public} = 1;
+                    my $tmp = $news_rs->create_news($news);
+                }
+            }
+        }
+    );
+
+    if ( $tx->find('ul[class="pagination"] li a')->grep( sub { $_->all_text =~ />/ } )->size > 0 ) {
+        $pages++;
+    }
+    else {
+        undef $pages;
+    }
+}
