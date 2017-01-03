@@ -4,7 +4,7 @@ use strictures 2;
 use namespace::clean;
 use base 'DBIx::Class::Schema';
 
-our $VERSION = 9;
+our $VERSION = 10;
 
 __PACKAGE__->load_namespaces;
 

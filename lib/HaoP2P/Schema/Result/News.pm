@@ -10,11 +10,11 @@ extends 'HaoP2P::Schema::Result';
 
 __PACKAGE__->table('news');
 __PACKAGE__->add_columns(
-    id      => { data_type => 'integer', is_nullable => 0, is_auto_increment => 1 },
-    title   => { data_type => 'varchar', is_nullable => 1, size              => 255 },
-    uniq_id => { data_type => 'varchar', is_nullable => 0, size              => 255 },
-    url     => { data_type => 'varchar', is_nullable => 0, size              => 255 },
-    tags    => { data_type => 'varchar', is_nullable => 0, size              => 255, serializer_class => 'JSON' },
+    id       => { data_type => 'integer', is_nullable => 0, is_auto_increment => 1 },
+    title    => { data_type => 'varchar', is_nullable => 1, size              => 255 },
+    uniq_id  => { data_type => 'varchar', is_nullable => 0, size              => 255 },
+    url      => { data_type => 'varchar', is_nullable => 0, size              => 255 },
+    tags     => { data_type => 'text',    is_nullable => 0, serializer_class  => 'JSON' },
     descript => { data_type => 'text', },
     content  => { data_type => 'text', },
 
