@@ -11,6 +11,8 @@ use HaoP2P::Bots;
 use Data::Dumper;
 use Digest::MD5 qw/md5_hex/;
 
+my $total_pages = shift || 5;
+
 my $now = DateTime->now( time_zone => 'Asia/Shanghai' );
 my $news_rs = HaoP2P->rset("News");
 
@@ -20,7 +22,7 @@ my $pages       = 1;
 my $uniq_prefix = 'p2pfinancenews_co_uk';
 $bot->ua( $bot->ua->max_redirects(3) );
 
-while ($pages and $pages < 5) {
+while ($pages and $pages < $total_pages ) {
     my $url = sprintf( 'http://www.p2pfinancenews.co.uk/news/page/%s/', $pages );
     full_logs("# $url");
     my $tx = $bot->ua->get($url)->res->dom;
