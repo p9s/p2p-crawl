@@ -38,7 +38,6 @@ while ($pages and $pages < $total_pages ) {
             my $news_id = md5_hex( $href ) if $href;
             my $uniq_id = sprintf( "%s_%s", $uniq_prefix, $news_id ) if $news_id;
 
-            print "$uniq_id\n";
             if ( $uniq_id && not $news_rs->is_exists($uniq_id) ) {
                 full_logs("## $href");
                 my $dom = $bot->ua->get($href)->res->dom;
