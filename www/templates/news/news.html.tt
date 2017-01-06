@@ -1,5 +1,5 @@
 <div class="row news">
-    <h1><a href="/news/[% news.id %]/[% news.title %]" target="_blank">[% news.title %]</a></h1>
+    <h1><a href="/news/[% news.id %]/[% news.title.replace( '\W+', '-') %]" target="_blank">[% news.title %]</a></h1>
     <div>
         [% FOREACH tag IN news.tags %]  
             <span class="label secondary">[% tag %]</span>
