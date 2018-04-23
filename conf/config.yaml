@@ -2,7 +2,7 @@
 DBI:
   - "DBI:mysql:database=haop2p"
   - "root"
-  - "alabos832206"
+  - ""
   -
     autocommit: 1
     printerror: 1
